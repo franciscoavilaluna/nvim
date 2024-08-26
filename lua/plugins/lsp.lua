@@ -34,6 +34,7 @@ return {
                 "bashls",
                 "yamlls",
                 "dockerls",
+                "marksman",
             },
             handlers = {
                 function(server_name) -- default handler (optional)
