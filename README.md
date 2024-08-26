@@ -17,7 +17,7 @@
 - [Curl](https://curl.se/)
 - [Nerd Font](https://github.com/ryanoasis/nerd-fonts) (Optional)
 - [C Compiler](https://github.com/nvim-treesitter/nvim-treesitter#requirements) for `nvim-treesitter`
-- [luarocks] to install rockspecs. You can remove `rockspec` from `opts.pkg.sources` to disable this feature.
+- [luarocks](https://luarocks.org/) to install rockspecs. You can remove `rockspec` from `opts.pkg.sources` to disable this feature.
 - For [telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
     - live grep: [ripgrep](https://github.com/BurntSushi/ripgrep)
     - find files: [fd](https://github.com/sharkdp/fd)
