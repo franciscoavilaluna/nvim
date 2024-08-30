@@ -11,8 +11,9 @@ vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
--- Smart Indenting
+-- Indenting
 vim.opt.smartindent = true
+vim.opt.autoindent = true
 
 -- Line Wrap
 vim.opt.wrap = false
@@ -27,6 +28,10 @@ vim.opt.undofile = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
+-- Search Settings
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
 -- Terminal Colors
 vim.opt.termguicolors = true
 
@@ -37,3 +42,15 @@ vim.opt.isfname:append("@-@")
 
 -- Update Time
 vim.opt.updatetime = 50
+
+-- UI Settings
+vim.opt.ruler = true
+vim.opt.showmatch = false
+vim.opt.backspace = {'indent', 'eol', 'start'}
+vim.opt.showcmd = true
+vim.opt.path:append('**')
+vim.opt.wildmenu = true
+vim.opt.wildmode = {'longest:full', 'full'}
+vim.opt.autoread = true
+vim.opt.errorbells = false
+vim.opt.history = 1000
