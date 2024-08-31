@@ -2,7 +2,7 @@
 vim.opt.guicursor = ""
 
 -- Set nu and rnu
-vim.opt.nu = true
+vim.opt.number = true
 vim.opt.relativenumber = true
 
 -- Indenting
@@ -54,3 +54,12 @@ vim.opt.wildmode = {'longest:full', 'full'}
 vim.opt.autoread = true
 vim.opt.errorbells = false
 vim.opt.history = 1000
+
+vim.api.nvim_create_autocmd('TextYankPost', {
+    group = vim.api.nvim_create_augroup('highlight_yank', {}),
+    desc = 'Highlight selection on yank',
+    pattern = '*',
+    callback = function ()
+        vim.highlight.on_yank { higroup = 'Visual', timeout = 50 }
+    end,
+})
