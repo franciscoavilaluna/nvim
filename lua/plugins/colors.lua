@@ -1,6 +1,5 @@
 function ColorMyPencils(color)
-    -- color = color or "rose-pine-moon"
-    color = color or "lunaperche"
+    color = color or "base16-black-metal-bathory"
     vim.cmd.colorscheme(color)
 
     vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
@@ -9,15 +8,9 @@ end
 
 return {
     {
-        "rose-pine/neovim",
-        name = "rose-pine",
-        config = function()
-            require('rose-pine').setup({
-                disable_background = true,
-                styles = { italic = true },
-                ColorMyPencils()
-            })
-        end
-    }
+        "RRethy/base16-nvim",
+        config = function ()
+            ColorMyPencils()
+        end,
+    },
 }
-

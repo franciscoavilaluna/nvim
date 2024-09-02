@@ -25,7 +25,7 @@ require("lazy").setup({
         { import = "plugins" },
     },
     -- Colorscheme that will be used when installing plugins.
-    install = { colorscheme = { "default" } },
+    install = { colorscheme = { "base16-black-metal-bathory" } },
     -- Automatically check for plugin updates
     checker = { enabled = true },
 })
