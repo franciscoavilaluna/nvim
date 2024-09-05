@@ -4,6 +4,22 @@ vim.g.mapleader = " "
 -- Open Netrw
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
+-- Disable netrw's banner
+vim.g.netrw_banner = 0
+
+-- Set minimal style for file listings
+vim.g.netrw_liststyle = 3
+
+-- Disable the file size and date
+vim.g.netrw_sizestyle = "H"
+vim.g.netrw_timefmt = ""
+
+-- Set the window size for netrw (optional)
+vim.g.netrw_winsize = 20
+
+-- Disable netrw's preview window (optional)
+vim.g.netrw_preview = 1
+
 -- Move code
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")

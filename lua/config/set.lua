@@ -60,6 +60,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight selection on yank',
     pattern = '*',
     callback = function ()
-        vim.highlight.on_yank { higroup = 'Visual', timeout = 50 }
+        vim.highlight.on_yank { higroup = 'Search', timeout = 50 }
     end,
 })
