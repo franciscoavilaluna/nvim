@@ -26,10 +26,9 @@ return {
         require("mason").setup()
         require("mason-lspconfig").setup({
             ensure_installed = {
-                "pyright",
+                "basedpyright",
                 "lua_ls",
                 "clangd",
-                "tsserver",
                 "jsonls",
                 "bashls",
                 "yamlls",

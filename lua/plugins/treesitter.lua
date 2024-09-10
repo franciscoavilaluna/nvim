@@ -7,7 +7,6 @@ return {
                 "python",
                 "lua",
                 "c",
-                "typescript",
                 "jsdoc",
                 "javascript",
                 "bash",
