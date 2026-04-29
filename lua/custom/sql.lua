@@ -97,15 +97,14 @@ local function floating_input(title, example, callback)
         local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
         local input = lines[#lines]:gsub("^%s+", ""):gsub("%s+$", "")
         close()
-        if input ~= "" then
-            callback(input)
-        end
+        callback(input)
     end, { buffer = buf })
 
     vim.keymap.set({ "i", "n" }, "<Esc>", close, { buffer = buf })
     vim.keymap.set("n", "q", close, { buffer = buf })
 end
 
+-- MENÚ DE SELECCIÓN
 local function open_menu(title, items, callback)
     local buf, win = create_window(title, 0.4, #items, false)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, items)
@@ -124,6 +123,7 @@ local function open_menu(title, items, callback)
     vim.keymap.set("n", "<Esc>", close, { buffer = buf })
 end
 
+-- AÑADIR CONEXIÓN (Modificado para no guardar pass en JSON)
 function M.add_connection()
     floating_input("NAME", "Ej: My_Connection", function(name)
         open_menu("SELECT ENGINE", { "mariadb", "postgres", "sqlite" }, function(engine)
@@ -137,14 +137,14 @@ function M.add_connection()
                 floating_input("HOST", "localhost", function(h)
                     floating_input("USER", "root", function(u)
                         floating_input("PASSWORD", "password", function(p)
-                            floating_input("DATABASE NAME", "dbname", function(db)
+                            floating_input("DATABASE NAME", "dbname (press [Enter] to leave empty)", function(db)
                                 local store_cmd = string.format("secret-tool store --label='SQL %s' db_engine %s db_user %s", name, engine, u)
                                 vim.fn.system(store_cmd, p)
                                 
                                 local c = load_connections()
                                 c[name] = { type = engine, host = h, user = u, db = db }
                                 save_connections(c)
-                                vim.notify("󰆼 Saved securely in Keyring: " .. name)
+                                vim.notify("Connection saved securely in Keyring: " .. name)
                             end)
                         end)
                     end)
@@ -202,12 +202,14 @@ function M.main_menu()
     end)
 end
 
+-- EJECUTAR SQL (Modificado para usar secret-tool)
 function M.run_sql(mode)
     local conns = load_connections()
     local conn = conns[db_state.current_key]
     if not conn then
 	last_message = "SELECT CONNECTION"
 	vim.cmd("redrawstatus")
+        --return vim.notify("Select Connection First", "warn")
 	return
     end
 
@@ -252,6 +254,7 @@ function M.run_sql(mode)
 
     if conn.type == "mariadb" or conn.type == "postgres" then
         local tool = (conn.type == "mariadb") and "mariadb" or "psql"
+        -- Usamos la variable 'pass' recuperada del llavero
         cmd = string.format("echo %s | %s -h%s -u%s -p%s %s -t 2>&1", esc, tool, conn.host, conn.user, pass, active_db)
     elseif conn.type == "sqlite" then
         cmd = string.format("echo %s | sqlite3 %s -header -column 2>&1", esc, conn.path)
@@ -284,10 +287,21 @@ function M.run_sql(mode)
     end
 end
 
+-- local sf = io.open(state_path, "r")
+-- if sf then
+--     db_state.current_key = sf:read("*a"):gsub("%s+", "")
+--     sf:close()
+--     local conns = load_connections()
+--     if conns[db_state.current_key] then
+--         db_state.current_user = conns[db_state.current_key].user
+--     end
+-- end
+
 function M.statusline()
     local ft = vim.bo.filetype
     if ft ~= "sql" then return "" end
 
+    -- Si hay un mensaje de error, tiene prioridad total
     if last_message ~= "" then
         local msg = "   " .. last_message .. " "
         vim.defer_fn(function()
@@ -297,17 +311,23 @@ function M.statusline()
         return "%#ErrorMsg#" .. msg
     end
 
+    -- Obtenemos los datos de la conexión actual
     local conns = load_connections()
     local conn = conns[db_state.current_key]
     
     local conn_name = (db_state.current_key ~= "" and db_state.current_key) or "NO CONN"
     local user = (db_state.current_user ~= "" and db_state.current_user) or "---"
     
+    -- LÓGICA DE BASE DE DATOS EN MEMORIA:
+    -- 1. Prioridad: db_state.current_db (cambiada por comando USE)
+    -- 2. Segunda opción: conn.db (la predeterminada del JSON)
+    -- 3. Por defecto: "---"
     local db_name = db_state.current_db or (conn and conn.db) or "---"
 
     local highlight = "%#StatusLineMedium#"
     if user == "root" then highlight = "%#ErrorMsg#" end
 
+    -- Retornamos el string formateado con el nombre de la DB
     return string.format(" %s   %s:  %s |  %s ", highlight, conn_name, db_name, user)
 end
 

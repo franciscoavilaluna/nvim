@@ -40,23 +40,29 @@ au("FileType", {
     group = web_group,
     callback = function()
         local opts = { buffer = true, silent = true }
+	vim.keymap.set("n", "<F10>", function()
+    -- Matar servidor previo
+    os.execute("fuser -k 8080/tcp > /dev/null 2>&1")
 
-        vim.keymap.set("n", "<F10>", function()
-            os.execute("pkill -f 'serve -p 8080'")
-	    local filetype = vim.bo.filetype
-	    local cmd = ""
+    -- Obtener ruta completa del archivo actual
+    local file_path = vim.fn.expand("%:p")
+    local file_dir = vim.fn.fnamemodify(file_path, ":h")
+    local file_name = vim.fn.fnamemodify(file_path, ":t")
 
-	    if filetype == "php" then
-            	cmd = "nohup php -S localhost:8080 > /dev/null 2>&1 &"
-	    else
-            	cmd = "nohup /run/current-system/sw/bin/serve -p 8080 > /dev/null 2>&1 &"
-	    end
+    -- Comando: cd al directorio del archivo y lanzar php -S
+    local cmd = string.format(
+        "cd %s && nohup php -S localhost:8080 > /dev/null 2>&1 &",
+        vim.fn.shellescape(file_dir)
+    )
 
-            vim.cmd("silent ! " .. cmd)
-            vim.defer_fn(function() 
-                vim.cmd("silent !xdg-open http://localhost:8080 &") 
-            end, 1000)
-        end, opts)
+    vim.cmd("silent ! " .. cmd)
+
+    -- Abrir el archivo actual en el navegador, no la raíz
+    vim.defer_fn(function()
+        local url = "http://localhost:8080/" .. file_name
+        vim.cmd("silent !xdg-open " .. url .. " &")
+    end, 1000)
+end, opts)
     end,
 })
 
