@@ -1,5 +1,4 @@
 local map = vim.keymap.set
-vim.g.mapleader = " "
 
 map("n", "<leader>lc", ":source $MYVIMRC<CR>", { desc = "Reload config" })
 map("n", "<leader>pv", ":20Lex<CR>", { desc = "Open netrw" })
