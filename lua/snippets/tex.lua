@@ -23,6 +23,7 @@ return {
     % figure support
     % \pdfsuppresswarningpagegroup=1
     \usepackage{{import}}
+    \usepackage{{graphicx}}
     \usepackage{{xifthen}}
     \usepackage{{pdfpages}}
     \usepackage{{transparent}}
@@ -35,6 +36,19 @@ return {
         {}
     \end{{document}}
   ]], { i(0) })),
+
+s({trig="img", snippetType="autosnippet"}, fmt([[
+    \begin{{figure}}[htpb]
+        \centering
+        \includegraphics[width=0.8\textwidth]{{./figures/{}.pdf}}
+        \caption{{{}}}
+        \label{{fig:{}}}
+    \end{{figure}}
+]], { 
+  i(1, "nombre_del_dibujo"), 
+  i(2, "descripción"), 
+  rep(1) 
+})),
 
   s({trig="beg", snippetType="autosnippet"}, fmt([[
     \begin{{{}}}
@@ -54,13 +68,13 @@ return {
   ]], { i(1, "htpb"), i(2, "caption"), i(3, "label"), i(4, "c"), i(0) })),
 
   s({trig="fig", snippetType="autosnippet"}, fmt([[
-    \begin{{figure}}[{}]
+    \begin{{figure}}[htpb]
         \centering
-        \includegraphics[width=0.8\textwidth]{{{}}}
+        \imfig{{{}}}
         \caption{{{}}}
         \label{{fig:{}}}
     \end{{figure}}
-  ]], { i(1, "htpb"), i(2), i(3), i(4) })),
+  ]], { i(1, "file_name"), i(2, "caption"), rep(1) })),
 
   s({trig="enum", snippetType="autosnippet"}, fmt([[
     \begin{{enumerate}}

@@ -71,3 +71,31 @@ end)
 map("n", "<leader>4", function()
 	require("custom.hook").nav_file(4)
 end)
+
+map("n", "<leader>img", function()
+    local line = vim.api.nvim_get_current_line()
+    local filename = line:match("{(.-)%.pdf}")
+    if not filename then
+        print("No se encontró nombre.pdf en la línea")
+        return
+    end
+
+    local current_file = vim.fn.expand("%:p:h")
+    local svg_path = vim.fn.fnamemodify(
+        (filename:sub(1,1) == "." or filename:sub(1,1) == "/") and filename or (current_file .. "/" .. filename),
+        ":p"
+    ) .. ".svg"
+
+    vim.fn.mkdir(vim.fn.fnamemodify(svg_path, ":h"), "p")
+
+    if vim.fn.filereadable(svg_path) == 0 then
+        local svg_content = [[
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
+  <rect width="100%" height="100%" fill="white"/>
+</svg>]]
+        vim.fn.writefile(vim.split(svg_content, "\n"), svg_path)
+        print("Creado " .. svg_path)
+    end
+
+    vim.fn.jobstart({ "inkscape", svg_path }, { detach = true })
+end, { desc = "Abrir/crear SVG con Inkscape" })

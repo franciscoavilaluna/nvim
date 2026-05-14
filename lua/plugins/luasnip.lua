@@ -16,10 +16,10 @@ return {
     ls.filetype_extend("tex", { 
         "latex",
     })
-    vim.keymap.set({ "i", "s" }, "<C-n>", function()
+    vim.keymap.set({ "i", "s" }, "<C-j>", function()
       if ls.jumpable(1) then ls.jump(1) end
     end, { silent = true })
-    vim.keymap.set({ "i", "s" }, "<C-p>p", function()
+    vim.keymap.set({ "i", "s" }, "<C-k>", function()
       if ls.jumpable(-1) then ls.jump(-1) end
     end, { silent = true })
   end,

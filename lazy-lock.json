@@ -1,6 +1,5 @@
 {
   "LuaSnip": { "branch": "master", "commit": "a62e1083a3cfe8b6b206e7d3d33a51091df25357" },
   "lazy.nvim": { "branch": "main", "commit": "306a05526ada86a7b30af95c5cc81ffba93fef97" },
-  "luasnip-latex-snippets.nvim": { "branch": "main", "commit": "a14821dd680dfdd2006b135425cc2a8ab297ebc6" },
-  "vimtex": { "branch": "master", "commit": "97e11bd4f56d46a87f8593d6ccb27820e19c4ab0" }
+  "vimtex": { "branch": "master", "commit": "182ad387e3f3107699483606c9a2b6648f8437b2" }
 }

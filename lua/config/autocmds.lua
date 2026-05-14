@@ -70,32 +70,49 @@ au("FileType", {
         local map = vim.keymap.set
         local opts = { buffer = true, silent = true }
 
-        map("n", "<F10>", function()
-            local file = vim.fn.expand("%:t")
-            local pdf = vim.fn.expand("%:r") .. ".pdf"
-            
-            vim.notify("Compiling latex file...")
-            vim.cmd("silent !latexmk -xelatex " .. vim.fn.shellescape(file))
-
-            local watch_cmd = string.format("latexmk -xelatex -pvc -interaction=nonstopmode -f %s > /dev/null 2>&1 &", vim.fn.shellescape(file))
-            vim.cmd("silent ! " .. watch_cmd)
-
-            if vim.fn.filereadable(pdf) == 1 then
-                vim.cmd("silent !zathura " .. pdf .. " > /dev/null 2>&1 &")
-                vim.notify("Engine and Visualizer active")
-            else
-                vim.notify("Error: PDF could not generate in time", vim.log.levels.ERROR)
+        map("n", "<leader>fi", function()
+            local line = vim.api.nvim_get_current_line()
+            local name = line:match("\\imfig%s*%{(.-)}")
+            if not name then
+                vim.notify("Couldn't find \\imfig{...} under cursor line", vim.log.levels.WARN)
+                return
             end
-        end, opts)
 
+            local tex_dir = vim.fn.expand("%:p:h")
+            local svg_path = tex_dir .. "/figures/" .. name .. ".svg"
+
+            vim.fn.mkdir(tex_dir .. "/figures", "p")
+
+            if vim.fn.filereadable(svg_path) == 0 then
+                local svg_content = [[
+                <svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
+                  <rect width="100%" height="100%" fill="white"/>
+                </svg>]]
+                vim.fn.writefile(vim.split(svg_content, "\n"), svg_path)
+                vim.notify("Created " .. svg_path)
+            end
+
+            vim.fn.jobstart({ "inkscape", svg_path }, { detach = true })
+
+            local pdf_path = tex_dir .. "/figures/" .. name .. ".pdf"
+            local watcher_cmd = string.format(
+                [[inotifywait -m -e close_write --format '%%w' "%s" 2>/dev/null | while read file; do
+                     inkscape --export-filename="%s" --export-latex "$file"
+                 done]],
+                svg_path:gsub('"', '\\"'),
+                pdf_path:gsub('"', '\\"')
+            )
+            vim.fn.jobstart(watcher_cmd, { detach = true, on_exit = function()
+                vim.notify("Watcher for " .. svg_path .. " stopped")
+            end })
+            vim.notify("Watcher initialized for " .. svg_path)
+        end, { desc = "Open SVG of \\imfig{...} on Inkscape + watcher" })
     end,
 })
 
 au("VimLeave", {
-    --group = web_group,
+    group = web_group,
     callback = function()
         os.execute("fuser -k 8080/tcp > /dev/null 2>&1")
-        os.execute("pkill latexmk")
-        os.execute("latexmk -c > /dev/null 2>&1")
     end,
 })
