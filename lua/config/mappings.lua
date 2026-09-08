@@ -29,7 +29,7 @@ end, { desc = "Format file" })
 
 require("custom.completion").setup()
 
-map("n", "<leader>o", function()
+map("n", "<leader>c", function()
 	require("custom.completion").toggle()
 end, { desc = "Toggle Auto-Menu" })
 
