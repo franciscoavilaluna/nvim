@@ -21,6 +21,9 @@ return {
         'jdtls',
         'clangd',
         'tinymist',
+        'sqlls',
+        'html',
+        'cssls',
       },
       auto_update = true,
       run_on_start = true,
@@ -41,7 +44,7 @@ return {
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local servers = {
-        pyright = {},
+        basedpyright = {},
         jdtls = {},
         sqlls = {},
         html = {},

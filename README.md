@@ -2,7 +2,7 @@
 
 A modular and blazing-fast **Neovim** configuration tailored for **Data Science**, **Academic Writing in Typst**, **SQL workflows** and **Full-Stack Development**.
 
-![Neovim](https://img.shields.io/badge/Editor-Neovim_0.10+-57A143?style=for-the-badge&logo=neovim&logoColor=white)
+![Neovim](https://img.shields.io/badge/Editor-Neovim_0.11+-57A143?style=for-the-badge&logo=neovim&logoColor=white)
 ![Linux](https://img.shields.io/badge/OS-Linux_Cross--Distro-1793D1?style=for-the-badge&logo=arch-linux&logoColor=white)
 ![Lua](https://img.shields.io/badge/Configured_With-Lua-000080?style=for-the-badge&logo=lua&logoColor=white)
 
@@ -53,7 +53,7 @@ The automated installer handles all of this for you, but if you're installing ma
 
 | Tool | Purpose |
 |---|---|
-| **Neovim ≥ 0.10** | The editor itself |
+| **Neovim ≥ 0.11** | Required — `lsp.lua` uses the native `vim.lsp.config`/`vim.lsp.enable` API, which doesn't exist before 0.11 |
 | **git** | Cloning the config and plugins |
 | **base-devel / build-essential** (gcc, make) | Building native plugin components |
 | **ripgrep**, **fd** | Telescope live grep / file search |
@@ -73,6 +73,7 @@ Optional, only needed for specific features:
 - **mariadb / psql / sqlite3** client binaries — whichever database engines you actually connect to
 - **PHP** — the built-in local dev server for `.php`/`.html`/`.css`/`.js` files
 - **stylua**, **rustfmt** — only if you use `<leader>f` on Lua/Rust files (not installed by `install.sh`)
+- **pynvim + jupyter_client** (`python3 -m pip install --user pynvim jupyter_client`, then `:UpdateRemotePlugins`) — required for Molten (Jupyter kernel execution)
 
 ---
 
@@ -230,9 +231,16 @@ If you'd rather install by hand (or you're on a distro the script doesn't specia
 
 ## Known Limitations
 
-- `lua/config/mappings.lua` binds `<leader>a`/`<leader>h`/`<leader>1-4` to a `custom.hook` module that isn't present in this repository, so those specific keys will error until a `lua/custom/hook.lua` is added.
-- The Molten.nvim keymaps in `mappings.lua` are wired up, but `molten-nvim` itself isn't declared as a plugin under `lua/plugins/`, so those keys won't do anything until the plugin is added there.
 - `stylua` and `rustfmt` (used by `<leader>f` on Lua/Rust files) aren't installed by `install.sh` — install them separately if you need them.
+- Molten additionally needs a Python provider (`pynvim` + `jupyter_client`) — see Requirements above.
+
+> The previous version of this README listed three configuration bugs here (a missing `custom.hook` module, an undeclared `molten-nvim` plugin, and a mismatched Mason/LSP server pair). All three have since been fixed — see the changelog below.
+
+### Fixes applied (see full report)
+- **`lua/plugins/lsp.lua`** — `mason-tool-installer` was installing `basedpyright`, but the LSP was enabled under the name `pyright` (a different, never-installed binary); `sqlls`/`html`/`cssls` were enabled but never auto-installed either. Fixed to install and enable the same server names.
+- **`lua/plugins/autopairs.lua`** — the `fast_wrap.pattern` Lua pattern had the literal word `interrogate` accidentally pasted into the character class, breaking the feature. Restored to nvim-autopairs' standard pattern.
+- **`lua/custom/hook.lua`** (new file) — `<leader>a`, `<leader>h`, `<leader>1-4` called a module that didn't exist anywhere in the repo. Added a minimal harpoon-style implementation (mark files, jump by number, floating list) covering the exact functions `mappings.lua` expects.
+- **`lua/plugins/molten.lua`** (new file) — the Molten keymaps in `mappings.lua` had no corresponding plugin declaration, so `:MoltenInit` etc. didn't exist. Added the plugin spec with `image.nvim` as its image backend.
 
 ---
 

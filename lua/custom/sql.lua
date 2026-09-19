@@ -104,7 +104,6 @@ local function floating_input(title, example, callback)
     vim.keymap.set("n", "q", close, { buffer = buf })
 end
 
--- MENÚ DE SELECCIÓN
 local function open_menu(title, items, callback)
     local buf, win = create_window(title, 0.4, #items, false)
     vim.api.nvim_buf_set_lines(buf, 0, -1, false, items)
@@ -123,7 +122,6 @@ local function open_menu(title, items, callback)
     vim.keymap.set("n", "<Esc>", close, { buffer = buf })
 end
 
--- AÑADIR CONEXIÓN (Modificado para no guardar pass en JSON)
 function M.add_connection()
     floating_input("NAME", "Ej: My_Connection", function(name)
         open_menu("SELECT ENGINE", { "mariadb", "postgres", "sqlite" }, function(engine)
@@ -181,7 +179,6 @@ function M.delete_connection()
     open_menu("DELETE CONNECTION", keys, function(choice)
         conns[choice] = nil
         save_connections(conns)
-        -- Nota: La contraseña seguirá en el llavero, pero el acceso en el menú se borra
         if db_state.current_key == choice then
             db_state.current_key = ""
         end
@@ -202,7 +199,6 @@ function M.main_menu()
     end)
 end
 
--- EJECUTAR SQL (Modificado para usar secret-tool)
 function M.run_sql(mode)
     local conns = load_connections()
     local conn = conns[db_state.current_key]
@@ -301,7 +297,6 @@ function M.statusline()
     local ft = vim.bo.filetype
     if ft ~= "sql" then return "" end
 
-    -- Si hay un mensaje de error, tiene prioridad total
     if last_message ~= "" then
         local msg = "   " .. last_message .. " "
         vim.defer_fn(function()
@@ -311,23 +306,17 @@ function M.statusline()
         return "%#ErrorMsg#" .. msg
     end
 
-    -- Obtenemos los datos de la conexión actual
     local conns = load_connections()
     local conn = conns[db_state.current_key]
     
     local conn_name = (db_state.current_key ~= "" and db_state.current_key) or "NO CONN"
     local user = (db_state.current_user ~= "" and db_state.current_user) or "---"
     
-    -- LÓGICA DE BASE DE DATOS EN MEMORIA:
-    -- 1. Prioridad: db_state.current_db (cambiada por comando USE)
-    -- 2. Segunda opción: conn.db (la predeterminada del JSON)
-    -- 3. Por defecto: "---"
     local db_name = db_state.current_db or (conn and conn.db) or "---"
 
     local highlight = "%#StatusLineMedium#"
     if user == "root" then highlight = "%#ErrorMsg#" end
 
-    -- Retornamos el string formateado con el nombre de la DB
     return string.format(" %s   %s:  %s |  %s ", highlight, conn_name, db_name, user)
 end
 

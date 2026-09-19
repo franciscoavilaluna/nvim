@@ -10,7 +10,7 @@ return {
     fast_wrap = {
       map = '<S-e>',
       chars = { '{', '[', '(', '"', "'" },
-      pattern = [=[[%'%"%]%}%)% interrogate%s]=],
+      pattern = [=[[%'%"%>%]%)%}%,]]=],
       end_key = '$',
       before_key = 'h',
       after_key = 'l',
