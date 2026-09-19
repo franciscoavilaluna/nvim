@@ -1,14 +1,14 @@
 return {
   'windwp/nvim-autopairs',
-  event = 'InsertEnter', -- Se carga únicamente al entrar en modo inserción
+  event = 'InsertEnter',
   opts = {
-    check_ts = true, -- Habilita integración con Treesitter para evitar autopairs dentro de strings/comentarios
+    check_ts = true,
     ts_config = {
-      lua = { 'string' }, -- No añadir autopairs en strings de Lua
-      javascript = { 'template_string' }, -- No añadir autopairs en template strings de JS
+      lua = { 'string' },
+      javascript = { 'template_string' },
     },
     fast_wrap = {
-      map = '<M-e>', -- Alt + e para envolver la palabra/expresión más cercana entre paréntesis o corchetes
+      map = '<S-e>',
       chars = { '{', '[', '(', '"', "'" },
       pattern = [=[[%'%"%]%}%)% interrogate%s]=],
       end_key = '$',
