@@ -19,43 +19,21 @@ map("n", "<C-u>", "<C-u>zz", { desc = "Center up scroll" })
 map("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move line up" })
 map("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move line down" })
 
-map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {
-	desc = "Search and replace word under cursor",
-})
+map("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]], {desc = "Search and replace word under cursor",})
 
 map("n", "<leader>f", function()
 	require("custom.format").format_buffer()
 end, { desc = "Format file" })
 
-require("custom.completion").setup()
-
-map("n", "<leader>c", function()
-	require("custom.completion").toggle()
-end, { desc = "Toggle Auto-Menu" })
-
-map("i", "<Tab>", function()
-	return require("custom.completion").super_tab()
-end, { expr = true, noremap = true })
-map("i", "<S-Tab>", function()
-	if vim.fn.pumvisible() ~= 0 then
-		return vim.api.nvim_replace_termcodes("<C-p>", true, false, true)
-	end
-	return vim.api.nvim_replace_termcodes("<S-Tab>", true, false, true)
-end, { expr = true, noremap = true })
-
-map("n", "<leader>t", function()
-	require("custom.terminal").toggle()
-end, { desc = "Toggle Floating Terminal" })
-
 map("n", "<leader>pf", function()
 	require("custom.finder").find_files()
 end)
 
-map("n", "<leader>h", function()
+map("n", "<leader>a", function()
 	require("custom.hook").add_file()
 end, { desc = "Hook: Mark" })
 
-map("n", "<leader>a", function()
+map("n", "<leader>h", function()
 	require("custom.hook").toggle_ui()
 end, { desc = "Hook: Toggle Menu" })
 
@@ -72,30 +50,11 @@ map("n", "<leader>4", function()
 	require("custom.hook").nav_file(4)
 end)
 
-map("n", "<leader>img", function()
-    local line = vim.api.nvim_get_current_line()
-    local filename = line:match("{(.-)%.pdf}")
-    if not filename then
-        print("No se encontró nombre.pdf en la línea")
-        return
-    end
+map("n", "<leader>mi", ":MoltenInit<CR>", { desc = "Init Kernel Jupyter" })
+map("n", "<leader>e", ":MoltenEvaluateOperator<CR>", { desc = "Evaluate operator" })
+map("n", "<leader>rl", ":MoltenEvaluateLine<CR>", { desc = "Exec current line" })
+map("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>", { desc = "Exect visual selection" })
+map("n", "<leader>rc", ":MoltenReevaluateCell<CR>", { desc = "Re exec section" })
+map("n", "<leader>ho", ":MoltenHideOutput<CR>", { desc = "Hide output" })
 
-    local current_file = vim.fn.expand("%:p:h")
-    local svg_path = vim.fn.fnamemodify(
-        (filename:sub(1,1) == "." or filename:sub(1,1) == "/") and filename or (current_file .. "/" .. filename),
-        ":p"
-    ) .. ".svg"
-
-    vim.fn.mkdir(vim.fn.fnamemodify(svg_path, ":h"), "p")
-
-    if vim.fn.filereadable(svg_path) == 0 then
-        local svg_content = [[
-<svg xmlns="http://www.w3.org/2000/svg" width="300" height="200">
-  <rect width="100%" height="100%" fill="white"/>
-</svg>]]
-        vim.fn.writefile(vim.split(svg_content, "\n"), svg_path)
-        print("Creado " .. svg_path)
-    end
-
-    vim.fn.jobstart({ "inkscape", svg_path }, { detach = true })
-end, { desc = "Abrir/crear SVG con Inkscape" })
+vim.keymap.set("n", "<leader>vs", ":VenvSelect<CR>", { desc = "Seleccionar virtualenv" })
