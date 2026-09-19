@@ -117,3 +117,4 @@ echo "Installing and syncing plugins with Lazy.nvim..."
 nvim --headless "+Lazy! sync" +qa
 
 echo "Installation completed successfully! Run 'nvim' to start."
+
