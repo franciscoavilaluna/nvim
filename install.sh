@@ -25,7 +25,7 @@ sudo pacman -Syu --needed --noconfirm \
     jdk-openjdk \
     clang \
     typst \
-    ttf-nerd-fonts-symbols-only
+    ttf-nerd-fonts-symbols-common
 
 if ! command -v yay &> /dev/null; then
     echo "🔍 'yay' no encontrado. Instalando yay para paquetes de AUR (ej. tinymist)..."
