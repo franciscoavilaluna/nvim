@@ -17,7 +17,7 @@ install_arch() {
     sudo pacman -Syu --needed --noconfirm \
         neovim git base-devel gcc make unzip curl gzip tar \
         ripgrep fd fzf python python-pip nodejs npm openjdk-src clang \
-        typst ttf-nerd-fonts-symbols-common
+        typst ttf-nerd-fonts-symbols-common tree-sitter-cli
 
     if ! command -v yay &> /dev/null; then
         echo "Installing yay for AUR packages..."
@@ -96,6 +96,11 @@ case "$OS_TYPE" in
         fi
         ;;
 esac
+
+if ! command -v tree-sitter &> /dev/null; then
+    echo "Installing tree-sitter-cli (needed by nvim-treesitter to compile parsers like sql that ship without pre-generated C source)..."
+    sudo npm install -g tree-sitter-cli
+fi
 
 if [ -d "$HOME/.config/nvim" ] && [ "$HOME/.config/nvim" != "$(pwd)" ]; then
     echo "Backing up existing configuration to ~/.config/nvim.bak..."
