@@ -25,10 +25,6 @@ map("n", "<leader>f", function()
 	require("custom.format").format_buffer()
 end, { desc = "Format file" })
 
-map("n", "<leader>pf", function()
-	require("custom.finder").find_files()
-end)
-
 map("n", "<leader>a", function()
 	require("custom.hook").add_file()
 end, { desc = "Hook: Mark" })
