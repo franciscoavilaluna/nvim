@@ -234,14 +234,6 @@ If you'd rather install by hand (or you're on a distro the script doesn't specia
 - `stylua` and `rustfmt` (used by `<leader>f` on Lua/Rust files) aren't installed by `install.sh` — install them separately if you need them.
 - Molten additionally needs a Python provider (`pynvim` + `jupyter_client`) — see Requirements above.
 
-> The previous version of this README listed three configuration bugs here (a missing `custom.hook` module, an undeclared `molten-nvim` plugin, and a mismatched Mason/LSP server pair). All three have since been fixed — see the changelog below.
-
-### Fixes applied (see full report)
-- **`lua/plugins/lsp.lua`** — `mason-tool-installer` was installing `basedpyright`, but the LSP was enabled under the name `pyright` (a different, never-installed binary); `sqlls`/`html`/`cssls` were enabled but never auto-installed either. Fixed to install and enable the same server names.
-- **`lua/plugins/autopairs.lua`** — the `fast_wrap.pattern` Lua pattern had the literal word `interrogate` accidentally pasted into the character class, breaking the feature. Restored to nvim-autopairs' standard pattern.
-- **`lua/custom/hook.lua`** (new file) — `<leader>a`, `<leader>h`, `<leader>1-4` called a module that didn't exist anywhere in the repo. Added a minimal harpoon-style implementation (mark files, jump by number, floating list) covering the exact functions `mappings.lua` expects.
-- **`lua/plugins/molten.lua`** (new file) — the Molten keymaps in `mappings.lua` had no corresponding plugin declaration, so `:MoltenInit` etc. didn't exist. Added the plugin spec with `image.nvim` as its image backend.
-
 ---
 
 ## Uninstalling / Restoring a Backup
