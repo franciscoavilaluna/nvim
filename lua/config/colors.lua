@@ -10,7 +10,7 @@ if os.getenv("VIM_EINK") == "1" then
 else
     vim.cmd("syntax on")
     opt.termguicolors = false
-    opt.laststatus = 1
+    --opt.laststatus = 1
     vim.g.base16colorspace = 256
 
 
