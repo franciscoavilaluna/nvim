@@ -8,7 +8,7 @@ return {
       javascript = { 'template_string' },
     },
     fast_wrap = {
-      map = '<S-e>',
+      map = '<C-e>',
       chars = { '{', '[', '(', '"', "'" },
       pattern = [=[[%'%"%>%]%)%}%,]]=],
       end_key = '$',
