@@ -35,7 +35,7 @@ else
             hl(0, "Todo", { ctermfg = 0, ctermbg = 3, bold = true })
             hl(0, "LineNr", { ctermfg = 8 })
             hl(0, "CursorLineNr", { ctermfg = 4, bold = true })
-            hl(0, "Visual", { ctermbg = 8, ctermfg = 15 })
+            -- hl(0, "Visual", { ctermbg = 8, ctermfg = 15 })
             hl(0, "Pmenu", { ctermbg = 0, ctermfg = 7 })
             hl(0, "Search", { ctermbg = 3, ctermfg = 0 })
         end,
