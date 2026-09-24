@@ -1,5 +1,6 @@
 local opt = vim.opt
 
+opt.foldenable = false
 opt.number = true
 opt.relativenumber = true
 opt.ruler = true
