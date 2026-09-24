@@ -23,7 +23,7 @@ A modular and blazing-fast **Neovim** configuration tailored for **Data Science*
 - **lualine.nvim** — status line.
 - **which-key.nvim** — on-screen hints for leader-key mappings.
 
-## Graphing and plotting
+### Graphing and plotting
 - **mermaid.nvim** — live preview with menu options for mermaid.
 
 ### Data Science & Interactive Workflows
