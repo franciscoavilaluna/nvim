@@ -7,14 +7,14 @@ return {
       "python", "lua", "c", "cpp", "java", "sql",
       "html", "css", "javascript", "typst",
       "markdown", "markdown_inline", "bash",
-      "json", "yaml", "toml", "vim", "vimdoc", "query",
+      "json", "yaml", "toml", "vim", "vimdoc", "query", "mermaid"
     })
 
     vim.api.nvim_create_autocmd("FileType", {
       pattern = {
         "python", "lua", "c", "cpp", "java", "sql",
         "html", "css", "javascript", "typst",
-        "markdown", "bash", "json", "yaml", "toml",
+        "markdown", "bash", "json", "yaml", "toml", "mermaid"
       },
       callback = function()
         pcall(vim.treesitter.start)
