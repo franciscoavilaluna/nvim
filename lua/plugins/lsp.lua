@@ -24,6 +24,7 @@ return {
         'sqlls',
         'html',
         'cssls',
+        'matlab-language-server',
       },
       auto_update = true,
       run_on_start = true,
@@ -50,6 +51,7 @@ return {
         html = {},
         cssls = {},
         clangd = {},
+        matlab_ls = {},
       }
 
       for name, config in pairs(servers) do
