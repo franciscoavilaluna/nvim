@@ -72,6 +72,25 @@ install_alpine() {
     cargo install --locked tinymist typstyle
 }
 
+install_matlab_support() {
+    echo ""
+    read -p "Do you want to install MATLAB support (Language Server + MATLAB base)? (y/N): " -n 1 -r < /dev/tty
+    echo ""
+    if [[ $REPLY =~ ^[Yy]$ ]]; then
+        echo "Installing MATLAB Language Server via npm for Neovim..."
+        sudo npm install -g matlab-language-server
+
+        if [[ "$OS_TYPE" =~ ^(arch|manjaro|endeavouros)$ ]]; then
+            echo "Installing MATLAB via AUR (yay)..."
+            yay -S --needed matlab
+        else
+            echo "On non-Arch systems, please install MATLAB manually from MathWorks website."
+        fi
+    else
+        echo "Skipping MATLAB installation."
+    fi
+}
+
 case "$OS_TYPE" in
     arch|manjaro|endeavouros)
         install_arch
@@ -86,16 +105,18 @@ case "$OS_TYPE" in
         install_alpine
         ;;
     *)
-        echo "⚠️ Unofficial distribution detected ($OS_TYPE). Attempting generic package installation..."
+        echo "Unofficial distribution detected ($OS_TYPE). Attempting generic package installation..."
         if command -v pacman &> /dev/null; then install_arch;
         elif command -v apt-get &> /dev/null; then install_debian;
         elif command -v dnf &> /dev/null; then install_fedora;
         else
-            echo "❌ Package manager not supported. Please install dependencies manually."
+            echo "Package manager not supported. Please install dependencies manually."
             exit 1
         fi
         ;;
 esac
+
+install_matlab_support
 
 if ! command -v tree-sitter &> /dev/null; then
     echo "Installing tree-sitter-cli (needed by nvim-treesitter to compile parsers like sql that ship without pre-generated C source)..."
