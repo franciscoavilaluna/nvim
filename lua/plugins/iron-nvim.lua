@@ -18,6 +18,9 @@ return {
             format = require("iron.fts.common").bracketed_paste,
             block_dividers = { "# %%", "#%%" },
           },
+          matlab ={
+            command = { "matlab", "-nodesktop", "-nosplash" }
+          }
         },
         repl_filetype = function(bufnr, ft)
           return ft
