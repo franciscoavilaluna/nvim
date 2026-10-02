@@ -17,7 +17,7 @@ install_arch() {
     sudo pacman -Syu --needed --noconfirm \
         neovim git base-devel gcc make unzip curl gzip tar \
         ripgrep fd fzf python python-pip nodejs npm openjdk-src clang \
-        typst ttf-nerd-fonts-symbols-common tree-sitter-cli
+        dotnet-sdk typst ttf-nerd-fonts-symbols-common tree-sitter-cli
 
     if ! command -v yay &> /dev/null; then
         echo "Installing yay for AUR packages..."
@@ -33,7 +33,7 @@ install_debian() {
     sudo apt update && sudo apt install -y \
         neovim git build-essential gcc make unzip curl gzip tar \
         ripgrep fd-find fzf python3 python3-pip nodejs npm \
-        default-jdk clang
+        default-jdk clang dotnet-sdk-8.0
 
     if ! command -v cargo &> /dev/null; then
         echo "Installing Rust/Cargo..."
@@ -51,7 +51,7 @@ install_fedora() {
     sudo dnf install -y \
         neovim git @development-tools gcc make unzip curl gzip tar \
         ripgrep fd-find fzf python3 python3-pip nodejs npm \
-        java-latest-openjdk clang
+        java-latest-openjdk clang dotnet-sdk-8.0
 
     if ! command -v cargo &> /dev/null; then
         sudo dnf install -y cargo
@@ -66,7 +66,7 @@ install_alpine() {
     sudo apk add --no-confirm \
         neovim git build-base gcc make unzip curl tar \
         ripgrep fd fzf python3 py3-pip nodejs npm \
-        openjdk17 clang cargo
+        openjdk17 clang cargo dotnet8-sdk
 
     echo "Installing tinymist and typstyle via cargo..."
     cargo install --locked tinymist typstyle
@@ -138,4 +138,3 @@ echo "Installing and syncing plugins with Lazy.nvim..."
 nvim --headless "+Lazy! sync" +qa
 
 echo "Installation completed successfully! Run 'nvim' to start."
-
