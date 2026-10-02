@@ -24,7 +24,7 @@ return {
         'sqlls',
         'html',
         'cssls',
-        'matlab-language-server',
+        'csharp_ls',
       },
       auto_update = true,
       run_on_start = true,
@@ -40,7 +40,9 @@ return {
     },
     config = function()
       require('mason').setup()
-      require('mason-lspconfig').setup()
+      require('mason-lspconfig').setup({
+        automatic_enable = false,
+      })
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
@@ -51,7 +53,7 @@ return {
         html = {},
         cssls = {},
         clangd = {},
-        matlab_ls = {},
+        csharp_ls = {},
       }
 
       for name, config in pairs(servers) do
