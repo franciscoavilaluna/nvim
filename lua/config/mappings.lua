@@ -32,4 +32,5 @@ map("v", "<leader>r", ":<C-u>MoltenEvaluateVisual<CR>", { desc = "Exect visual s
 map("n", "<leader>rc", ":MoltenReevaluateCell<CR>", { desc = "Re exec section" })
 map("n", "<leader>ho", ":MoltenHideOutput<CR>", { desc = "Hide output" })
 
-vim.keymap.set("n", "<leader>vs", ":VenvSelect<CR>", { desc = "Seleccionar virtualenv" })
+map("n", "<leader>vs", ":VenvSelect<CR>", { desc = "Seleccionar virtualenv" })
+map('n', '<leader>d', vim.diagnostic.open_float)
