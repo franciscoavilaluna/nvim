@@ -1,5 +1,11 @@
 local opt = vim.opt
 
+vim.diagnostic.config({
+  virtual_text = true,
+  signs = true,
+  underline = true,
+})
+
 opt.foldenable = false
 opt.number = true
 opt.relativenumber = true
