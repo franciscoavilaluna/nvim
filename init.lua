@@ -1,6 +1,5 @@
 require("config.lazy")
 require("config.mappings")
 require("config.general")
-require("config.colors")
 require("config.autocmds")
 require("custom.format")
