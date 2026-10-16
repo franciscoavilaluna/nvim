@@ -2,7 +2,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     branch = "main",
     build = ":TSUpdate",
-        nfig = function()
+    config = function()
         require("nvim-treesitter").install({
             "python", "lua", "c", "cpp", "java", "sql",
             "html", "css", "javascript", "typst",
