@@ -1,7 +1,5 @@
 return {
-    {
-        "GCBallesteros/jupytext.nvim",
-        enabled = true,
-        config = true,
-    }
+	"GCBallesteros/jupytext.nvim",
+	enabled = true,
+	config = true,
 }

@@ -1,3 +1,5 @@
+-- stylua
+
 local M = {}
 
 local formatters = {

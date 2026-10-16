@@ -1,10 +1,7 @@
 local opt = vim.opt
+local hl = vim.api.nvim_set_hl
 
-vim.diagnostic.config({
-  virtual_text = true,
-  signs = true,
-  underline = true,
-})
+vim.diagnostic.config({ virtual_text = true })
 
 opt.foldenable = false
 opt.number = true
@@ -27,10 +24,7 @@ opt.backspace = { "indent", "eol", "start" }
 opt.errorbells = false
 opt.visualbell = false
 
-vim.cmd("syntax on")
 vim.cmd("syntax enable")
-
-local hl = vim.api.nvim_set_hl
 
 vim.g.netrw_banner = 0
 vim.g.netrw_liststyle = 3
@@ -62,3 +56,10 @@ vim.g.omni_sql_no_default_maps = 1
 
 opt.cmdheight = 1
 opt.showmode = true
+
+opt.scrolloff = 8
+opt.signcolumn = "yes"
+opt.undofile = true
+opt.splitright = true
+opt.splitbelow = true
+opt.updatetime = 250
