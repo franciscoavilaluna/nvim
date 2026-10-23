@@ -69,7 +69,7 @@ understand. This one is deliberately different:
 
 ## Feature highlights
 
-### 🔬 Data Science & Jupyter
+### Data Science & Jupyter
 - **Molten.nvim** — run Python inside Neovim against a live Jupyter kernel with inline output
   rendered by `image.nvim`.
 - **Jupytext.nvim** — open `.ipynb` notebooks as clean, version-controllable Python scripts.
@@ -80,19 +80,19 @@ understand. This one is deliberately different:
 - **venv-selector.nvim** — switch between project virtualenvs straight from Telescope.
 - **basedpyright** — fast, strict Python language server.
 
-### 📄 Academic writing in Typst
+### Academic writing in Typst
 - **Tinymist LSP** — completion for `#` functions, variables, labels and imports.
 - **typst-preview.nvim** — live PDF preview with bidirectional SyncTeX navigation.
 - **Typstyle** formatting on demand, plus `exportPdf = "onType"` for instant feedback.
 
-### 🗄️ SQL workbench
+### SQL workbench
 - A hand-written **floating-window connection manager** (`<leader>db` in `.sql` buffers) to add,
   select and delete connections for **MariaDB**, **PostgreSQL** and **SQLite**.
 - Credentials are pulled from the system keyring, and connection files are `chmod 600`.
 - Run the current line or a visual selection with `F10`; results open in a read-only scratch
   buffer that closes with `q`.
 
-### 🌐 Polyglot development
+### Polyglot development
 - **Mason + `nvim-lspconfig`** auto-install language servers: `basedpyright`, `jdtls`, `clangd`,
   `sqlls`, `html`, `cssls`, `csharp_ls` and `tinymist`.
 - **Buffer formatter** (`<leader>f`) dispatching to `black`, `sqlformat`, `clang-format`,
@@ -104,7 +104,7 @@ understand. This one is deliberately different:
   - SQL → execute the line/selection.
 - **Treesitter** highlighting, folding and indentation for 20+ languages.
 
-### 🎨 UI & navigation
+### UI & navigation
 - **cyberdream** colorscheme, **lualine** status line, **indent-blankline** scope guides.
 - **noice.nvim** + **nvim-notify** — a floating command line and rich notifications.
 - **which-key.nvim** — discoverable leader-key hints.
@@ -112,7 +112,7 @@ understand. This one is deliberately different:
 - **blink.cmp** + **LuaSnip** — snippet-aware completion with `<Tab>` / `<S-Tab>` cycling.
 
 <!--
-### 📸 Screenshots
+### Screenshots
 
 Drop images here once captured and delete this comment block. Suggested shots:
   docs/screenshots/dashboard.png   — startup screen + lualine + which-key
